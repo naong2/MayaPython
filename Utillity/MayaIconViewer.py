@@ -20,6 +20,7 @@ def showMyWindow():
         #if count >10:
         #    break
 
+
 def clipboard(item):
     cmd = 'echo ' + item.strip() + '|clip'
     print item

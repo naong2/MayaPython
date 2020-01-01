@@ -4,8 +4,10 @@ import random
 
 def showMyWindow():
     winname = "myWindow"
+
     if cmds.window(winname, query=True, exists=True):
-        cmds.deleteUI(winname)
+        cmds.deleteUI(winname, window=True)
+
     cmds.window(winname)
     cmds.showWindow()
 
