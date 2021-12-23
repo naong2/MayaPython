@@ -1,0 +1,80 @@
+/*  This file downloaded from Highend3d.com
+''  
+''  Highend3d.com File Information:
+''  
+''    Script Name: ReloadFiles v1.0
+''    Author: Dai Sato
+''    Last Updated: January 12, 2004
+''    Update/Change this file at:
+''    http://www.highend3d.com/maya/mel/?section=rendering#2705
+''  
+''  Please do not alter any information above this line
+''  it is generated dynamically by Highend3d.com and will
+''  be changed automatically on any updates.
+*/
+
+//ReloadFiles
+//
+// Date: 2004/01/06
+// Author: Dai Sato   dstruevision@dstruevision.com    http://www.dstruevision.com
+// Procedure Name: ReloadFiles
+// 
+// Description: This scripts just reload all texture files.
+    
+
+global proc forceReloadFileTextures () {
+    $fileNodes = `ls -typ file`;
+    $progressMax = size($fileNodes);
+    if($progressMax != 0)
+    {
+        if (`control -query -exists mainProgressBar`)
+            progressBar -edit -beginProgress -isInterruptable true -status "Calculation ..." -maxValue $progressMax mainProgressBar;
+        for ($file in $fileNodes)
+		{
+            string $connectedMaterials[] = `listConnections -scn true -s false -d true -p true ($file + ".outColor")`;
+
+            int $needsReload = 0;
+            for ($mat in $connectedMaterials)
+	        {
+                string $material[];
+                tokenize $mat "." $material;
+                $materialType = `objectType $material[0]`;
+                if ($materialType == "AmatShader") {
+                    disconnectAttr ($file + ".outColor") $mat;
+                    connectAttr ($file + ".outColor") $mat;
+                } else {
+                    $needsReload = 1;
+                }
+                if (`control -query -exists mainProgressBar`)
+                    progressBar -edit -step 1 mainProgressBar;
+            }
+            if ($needsReload) {
+                string $fullFileName = `getAttr($file+".fileTextureName")`;
+                if ($fullFileName != "") {
+                    setAttr -type "string" ( $file + ".fileTextureName") $fullFileName;
+                }
+            }
+        }
+        if (`control -query -exists mainProgressBar`)
+            progressBar -edit -endProgress mainProgressBar;
+    }
+}
+
+global proc ReloadFiles () {
+    global int $progressMax = 10;
+    if ((`window -ex RenameFileWindow`) == true) deleteUI RenameFileWindow;
+    window -t "ReloadFiles" -s false RenameFileWindow;
+    columnLayout -rs 10;
+        progressBar -width 150 -height 10 mainProgressBar;
+        rowColumnLayout -numberOfRows 1;
+            button -l "Reload" -w 50 -h 30 -c "forceReloadFileTextures()";
+            button -l "Undo" -w 50 -h 30 -c "undo";
+    window -e -width 180 -height 100 RenameFileWindow;
+    showWindow;
+
+}
+
+
+
+
+
