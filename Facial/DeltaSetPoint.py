@@ -37,8 +37,6 @@ def getPTArray(obj, worldspace=False):
     return pointsArray
 
 
-
-
 def getDelta(*args, **kwargs):
     startTime = time.time()
     TargetMesh = args[0]
@@ -85,6 +83,11 @@ def mergeOffset(*args, **kwargs):
     return offsetPoints
 
 def delta_set_point(*args):
+    '''
+    1st Select:
+    2nd Select:
+    3rd Select:
+    '''
     tmp_sel = cmds.ls(sl=1)
     tmpArray = getDelta(tmp_sel[0], tmp_sel[1])
     resultArray = mergeOffset(tmp_sel[2], tmpArray)
@@ -92,18 +95,15 @@ def delta_set_point(*args):
     deltaMesh.setPoints(resultArray, om.MSpace.kObject)
 
 def show():
-    winname = "CreateJointToVertex"
+    winname = "Delta"
     if cmds.window(winname, query=True, exists=True):
         cmds.deleteUI(winname)
     cmds.window(winname)
     cmds.showWindow()
     cmds.columnLayout(adj=1)
-
-
-    cmds.button(l='Create Joint',c=do_create_joint, h=50,bgc=[ 0.6, 0,0.6])
-    cmds.button(l='Create Joint & Constraint', c=do_create_joint_constraint, h=50, bgc=[0.3, 0.1, 0.6])
+    cmds.text('Select meshes "original", "delta", "applymesh" ')
+    cmds.button(l='Delta Set Point',c=delta_set_point, h=50,bgc=[ 0.6, 0.7,0.2])
     cmds.columnLayout(adj=1)
-
 
 show()
 
