@@ -1,0 +1,49 @@
+global string $gridMemName = "IMGridMem";
+global string $gridTitName ="IM Grid Setting";
+
+global proc frameAllView2()
+{
+setAttr perspShape.nearClipPlane 1;
+setAttr perspShape.farClipPlane 5000000;
+setAttr topShape.nearClipPlane 1;
+setAttr topShape.farClipPlane 1000000;
+setAttr frontShape.nearClipPlane 1;
+setAttr frontShape.farClipPlane 1000000;
+setAttr sideShape.nearClipPlane 1;
+setAttr sideShape.farClipPlane 1000000;
+setAttr top.translateZ 200000;
+setAttr front.translateY -200000;
+setAttr side.translateX 200000;
+FrameAllInAllViews;
+fitAllPanels -all;
+};
+
+global proc IMGrid()
+{
+	global string $gridMemName;
+	global string $gridTitName;
+	
+	if (`window -exists $gridMemName`)
+	deleteUI $gridMemName;
+	
+window -width 200 
+	-height 120
+	-title $gridTitName
+	-sizeable false
+	$gridMemName;
+
+gridLayout -numberOfColumns 4 -cellWidthHeight 50 40;
+
+button -l 1cm -command "grid -spacing 1 -s 10 -d 1";
+button -l 10cm -command "grid -spacing 10 -s 100 -d 1"; 
+button -l 1m -command "grid -spacing 100 -s 2000 -d 1"; 
+button -l 10m -command "grid -spacing 1000 -s 10000 -d 1"; 
+button -l 100m -command "grid -spacing 10000 -s 100000 -d 1"; 
+button -l 1k -command "grid -spacing 100000 -s 1000000 -d 1";
+button -l 5k -command "grid -spacing 500000 -s 1000000 -d 1";
+button -l FrameAll -command "frameAllView2";
+
+showWindow $gridMemName;
+
+};
+IMGrid;
