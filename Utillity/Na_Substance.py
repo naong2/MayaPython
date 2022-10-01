@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from maya import cmds
 
+
 def showMyWindow():
     winname = "IMSubstance"
     if cmds.window(winname, query=True, exists=True):
@@ -20,7 +21,7 @@ def showMyWindow():
 def applyMaterial(*args):
     select = cmds.ls(sl=1)
     if not select:
-        print 'select!'
+        print('select!')
         return
     shd = cmds.shadingNode('lambert', name="ID_Mat", asShader=True)
     shdSG = cmds.sets(name='%sSG' % shd, empty=True, renderable=True, noSurfaceShader=True)
@@ -36,6 +37,6 @@ def get_materials_in_scene(*args):
     for shading_engine in cmds.ls(type='shadingEngine'):
         if cmds.sets(shading_engine, q=True):
             for material in cmds.ls(cmds.listConnections(shading_engine), materials=True):
-                print material
+                print (material)
 
 showMyWindow()
