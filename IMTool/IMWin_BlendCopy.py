@@ -2420,18 +2420,18 @@ class DesignerUI(QtWidgets.QDialog):
 
     # 블렌드쉐입과 연결된 녀석들 리스트 뽑아주는 곳
     def getBlendshapeConnects(self):
-        bsName = self.ui.lineEdit_blendshapenodeName.text()
-        BSList = []
-        CtrlList = []
-        blendshapes = cmds.listAttr(bsName + '.w', m=True)
-        for bs in blendshapes:
-            connect = cmds.listConnections(bsName + '.' + bs, d=False, s=True, p=True)
-            if connect:
-                BSList.append(bsName + '.' + bs)
-                CtrlList.append(connect[0])
-        print BSList
-        print CtrlList
-        return BSList, CtrlList
+            bsName = self.ui.lineEdit_blendshapenodeName.text()
+            BSList = []
+            CtrlList = []
+            blendshapes = cmds.listAttr(bsName + '.w', m=True)
+            for bs in blendshapes:
+                connect = cmds.listConnections(bsName + '.' + bs, d=False, s=True, p=True)
+                if connect:
+                    BSList.append(bsName + '.' + bs)
+                    CtrlList.append(connect[0])
+            print BSList
+            print CtrlList
+            return BSList, CtrlList
 
     def printBSConnectInfo(self):
         count = 0

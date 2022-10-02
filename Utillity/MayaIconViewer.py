@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 from maya import cmds
 import subprocess
 
@@ -23,7 +22,7 @@ def showMyWindow():
 
 def clipboard(item):
     cmd = 'echo ' + item.strip() + '|clip'
-    print item
+    print (item)
     return subprocess.check_call(cmd, shell=True)
 
 

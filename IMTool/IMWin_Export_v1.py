@@ -155,6 +155,7 @@ class DesignerUI(QtWidgets.QDialog):
 
         # 작업폴더 콤보박스 리스트 지우기
         self.ui.pb_delfolder.clicked.connect(self.del_workfolder)
+        self.ui.pushButton_refresh.clicked.connect(self.refresh_list)
 
         # 익스포트 시키기
         self.ui.pb_FBXExport.clicked.connect(self.export_fbx_select)
@@ -390,9 +391,9 @@ class DesignerUI(QtWidgets.QDialog):
         self.open_in_folder_action = QtWidgets.QAction(u"Open", self)
         self.import_in_folder_action = QtWidgets.QAction(u"Import", self)
         self.set_in_folder_action = QtWidgets.QAction(u"Set to Export Folder", self)
-        self.make_in_folder_action = QtWidgets.QAction(u"폴더생성", self)
-        self.show_in_folder_action = QtWidgets.QAction(u"탐색창 열기", self)
-        self.create_in_folder_action = QtWidgets.QAction(u"작업폴더만들기", self)
+        self.make_in_folder_action = QtWidgets.QAction(u"New Folder", self)
+        self.show_in_folder_action = QtWidgets.QAction(u"Open Explore", self)
+        self.create_in_folder_action = QtWidgets.QAction(u"Make Workfolder", self)
         self.checkout_in_folder_action = QtWidgets.QAction(u"Checkout file", self)
         self.refresh_list()
 
